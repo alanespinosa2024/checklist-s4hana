@@ -1,0 +1,1315 @@
+  <!DOCTYPE html>
+  <html lang="es">
+  <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Check-list para la Planeación de la migración hacia SAP S/4 HANA </title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f5f5f5; margin:0; padding:0; color:#333; }
+    header { background: #004d99; color: #fff; padding: 25px 20px; text-align:center; }
+    h1 { margin:0; font-size:2em; }
+    .container { padding: 20px; max-width: 900px; margin:auto; }
+    .accordion { cursor:pointer; padding:15px; width:100%; border:none; text-align:left; outline:none; margin-bottom:5px; font-size:1.1em; border-radius:5px; display:flex; align-items:center; }
+    .accordion span { margin-right:10px; font-size:1.2em; }
+    .panel { padding: 0 20px 15px 20px; background:white; display:none; overflow:hidden; border-left:5px solid; margin-bottom:10px; border-radius:5px; }
+    .panel ul { margin:10px 0; padding-left:20px; }
+    .panel li { margin-bottom:12px; }
+    .phase-blue { background-color:#0073e6; color:white; }
+    .phase-green { background-color:#28a745; color:white; }
+    .phase-orange { background-color:#ff9933; color:white; }
+    .phase-purple { background-color:#6f42c1; color:white; }
+    input[type=text], textarea { width: 95%; padding:6px; border:1px solid #ccc; border-radius:4px; }
+    input[type=checkbox] { margin-right:6px; }
+    #resumen { background:white; padding:20px; border-radius:5px; border-left:5px solid #004d99; margin-top:20px; }
+  </style>
+  </head>
+  <body>
+
+  <header>
+    <h1>Planeación de la migración hacia SAP S/4 HANA</h1>
+    <p>Check-list de tareas de la Metodología SAP Activate</p>
+  </header>
+
+  <div class="container">
+
+  <!-- Campos iniciales -->
+  <ul>
+    <li>
+      <label>Proyecto:</label><br>
+      <input type="text" id="proyecto" placeholder="Nombre del proyecto">
+    </li>
+    <li>
+      <label>Elaboró:</label><br>
+      <input type="text" id="elaboro" placeholder="Nombre del responsable">
+    </li>
+  </ul>
+
+<div class="flowchart-horizontal">
+  <div class="phase phase-orange first">1. Discover</div>
+  <div class="phase phase-green">2. Prepare</div>
+  <div class="phase phase-orange">3. Explore</div>
+  <div class="phase phase-purple">4. Realize</div>
+  <div class="phase phase-green">5. Deploy</div>
+  <div class="phase phase-blue last small">6. Run</div>
+</div>
+
+<style>
+.flowchart-horizontal {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  margin-bottom: 20px;
+  font-family: Arial, sans-serif;
+}
+
+/* Bloques estilo flecha */
+.phase {
+  position: relative;
+  color: white;
+  font-weight: bold;
+  text-align: center;
+  padding: 12px 24px;
+  min-width: 120px;
+  margin-right: -10px; 
+  clip-path: polygon(0 0%, 90% 0%, 100% 50%, 90% 100%, 0 100%, 10% 50%);
+  box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+  transition: transform 0.2s;
+}
+
+/* Hover efecto */
+.phase:hover {
+  transform: translateY(-3px) scale(1.05);
+}
+
+/* Colores */
+.phase-orange { background-color: #ff9933; }
+.phase-green  { background-color: #28a745; }
+.phase-purple { background-color: #8e44ad; }
+.phase-blue   { background-color: #0073e6; }
+
+/* Ajustes especiales */
+.phase.first {
+  clip-path: polygon(0 0%, 90% 0%, 100% 50%, 90% 100%, 0 100%);
+}
+.phase.last {
+  clip-path: polygon(0 0%, 90% 0%, 100% 50%, 90% 100%, 0 100%, 10% 50%);
+  margin-right: 0;
+}
+
+/* Ajuste para fase pequeña */
+.phase.small {
+  min-width: 80px;
+  padding: 10px 16px;
+}
+
+/* Responsivo */
+@media (max-width: 600px) {
+  .flowchart-horizontal {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .phase {
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    margin-right: 0;
+    margin-bottom: 8px;
+  }
+  .phase.small {
+    min-width: auto;
+    padding: 12px 8px;
+  }
+}
+</style>
+
+
+
+<!-- Discover -->
+<button class="accordion phase-orange"><span></span>1. Discover</button>
+<div class="panel" style="border-color:#ff9933">
+<ul>
+    <!-- Sección de Análisis Inicial -->
+    <li style="list-style:none; margin-left:-20px; font-weight:bold;">🔹 Identificación de necesidades</li>
+    <li>
+      <label>¿Cuál es la necesidad de negocio que impulsa la transformación?</label><br>
+      <textarea id="necesidadNegocio" placeholder="Ej: Modernizar ERP, mejorar procesos financieros, reducir TCO" style="height:60px;"></textarea>
+    </li>
+
+    <li>
+      <label>¿Qué objetivos estratégicos se esperan cumplir con S/4HANA?</label><br>
+      <textarea id="objetivosEstrategicos" placeholder="Ej: Transformación digital, eficiencia operativa, crecimiento" style="height:60px;"></textarea>
+    </li>
+
+    <!-- Sección de Exploración de Solución -->
+    <li style="list-style:none; margin-left:-20px; font-weight:bold; margin-top:12px;">🔹 Exploración de capacidades de SAP</li>
+    <li>
+      <label>¿Qué funcionalidades clave de S/4HANA son relevantes?</label><br>
+      <input type="text" id="funcionalidadesClave" placeholder="Ej: Embedded Analytics, Fiori, Machine Learning">
+    </li>
+    <li>
+      <label>¿Qué beneficios de negocio se esperan?</label><br>
+      <textarea id="beneficiosEsperados" placeholder="Ej: Optimización financiera, mayor agilidad, automatización" style="height:60px;"></textarea>
+    </li>
+
+    <!-- Readiness y Evaluación -->
+    <li style="list-style:none; margin-left:-20px; font-weight:bold; margin-top:12px;">Readiness y Alineación</li>
+    <li>
+      <label>Evaluar preparación organizacional:</label><br>
+      <label><input type="checkbox" id="stakeholdersAlineados"> Alineación de stakeholders</label><br>
+      <label><input type="checkbox" id="equipoInterno"> Equipo interno identificado</label><br>
+      <label><input type="checkbox" id="patrocinioEjecutivo"> Patrocinio ejecutivo confirmado</label>
+    </li>
+    <li>
+      <label>Principales riesgos identificados:</label><br>
+      <textarea id="riesgosDiscover" placeholder="Ej: Resistencia al cambio, falta de skills, presupuesto" style="height:50px;"></textarea>
+    </li>
+
+    <!-- Estrategia y Roadmap -->
+    <li style="list-style:none; margin-left:-20px; font-weight:bold; margin-top:12px;">Estrategia y Roadmap</li>
+    <li>
+      <label>Definir camino de implementación:</label><br>
+      <label><input type="checkbox" id="estrategiaGreenfield"> Greenfield: Nueva implementación</label><br>
+      <label><input type="checkbox" id="estrategiaBrownfield"> Brownfield: Conversión técnica</label><br>
+      <label><input type="checkbox" id="estrategiaHybrid"> Selective Data Transition (Híbrido)</label>
+    </li>
+    <li>
+      <label>Roadmap de alto nivel y hitos iniciales:</label><br>
+      <textarea id="roadmapDiscover" placeholder="Ej: PoC → Preparación → Implementación piloto → Rollout global" style="height:50px;"></textarea>
+    </li>
+
+    <!-- Arquitectura actual -->
+    <li style="list-style:none; margin-left:-20px; font-weight:bold; margin-top:12px;">Análisis de Arquitectura Actual</li>
+    <li>
+      <label>Descripción del landscape actual:</label><br>
+      <textarea id="landscapeActual" placeholder="Sistemas SAP y no SAP, interfaces, DB, middleware" style="height:60px;"></textarea>
+    </li>
+
+    <!-- Deliverables -->
+    <li style="list-style:none; margin-left:-20px; font-weight:bold; margin-top:12px;">Deliverables clave</li>
+    <li>
+      <label><input type="checkbox" id="deliverableBusinessCase"> Business Case documentado</label><br>
+      <label><input type="checkbox" id="deliverableRoadmap"> Roadmap de alto nivel definido</label><br>
+      <label><input type="checkbox" id="deliverableScope"> Alcance funcional preliminar</label><br>
+      <label><input type="checkbox" id="deliverableEstrategia"> Estrategia de adopción acordada</label>
+    </li>
+  </ul>
+</div>
+
+<!-- Prepare -->
+<button class="accordion phase-green"><span></span>2. Prepare</button>
+<div class="panel" style="border-color:#28a745">
+  <ul>
+    <!-- 🔹 Análisis inicial -->
+    <li style="list-style:none; margin-left:-20px; font-weight:bold;">Análisis inicial</li>
+
+    <li>
+      <label>¿Cuál es el alcance (solo migración técnica vs. transformación de procesos)?</label><br>
+      <input type="text" id="alcancePrepEval" placeholder="Ej: Migración técnica / Transformación de procesos / Mixto">
+    </li>
+
+    <li>
+      <label>¿Cuál es la versión actual de ECC (EHP, base de datos, add-ons, etc.)?</label><br>
+      <input type="text" id="eccVersion" placeholder="Ej: ECC 6.0 EHP8, HANA 2.0, Add-ons XYZ">
+    </li>
+
+    <li>
+      <label>Identificar dependencias técnicas (sistemas satélite, interfaces, BW, PI/PO, etc.):</label><br>
+      <textarea id="dependenciasTecnicas" placeholder="Listar sistemas e interfaces relevantes" style="height:60px;"></textarea>
+    </li>
+
+    <li>
+      <label style="display:block; margin-bottom:6px;">Evaluar opciones de migración:</label>
+      <label><input type="checkbox" id="optBrownfield"> Brownfield: Conversión técnica (mantener configuración existente).</label><br>
+      <label><input type="checkbox" id="optGreenfield"> Greenfield: Nueva implementación en limpio.</label><br>
+      <label><input type="checkbox" id="optHybrid"> Hybrid: Migración selectiva.</label>
+    </li>
+
+    <!-- Campo de observaciones -->
+    <li>
+      <label style="display:block; margin-top:10px;">Observaciones sobre opciones de migración:</label>
+      <textarea id="obsMigracion" placeholder="Notas o comentarios adicionales" style="height:50px;"></textarea>
+    </li>
+
+    <!-- 1️⃣ Estado del sistema actual -->
+    <li style="list-style:none; margin-left:-20px; font-weight:bold; margin-top:15px;">Estado del sistema actual</li>
+    <li>
+      <ul>
+        <li>
+          <input type="checkbox" id="ecc-ehp0-5" />
+          <label for="ecc-ehp0-5">SAP ECC 6 EHP0 - EHP5: Soporte principal finaliza en 2025</label>
+        </li>
+        <li>
+          <input type="checkbox" id="ecc-ehp6-8" />
+          <label for="ecc-ehp6-8">SAP ECC 6 EHP6 - EHP8: Soporte principal finaliza en 2027</label>
+        </li>
+        <li>
+          <input type="checkbox" id="system-unicode" />
+          <label for="Sistema-Unicode">Sistema Unicode</label>
+        </li>
+        <li>
+          <input type="checkbox" id="system-non-unicode" />
+          <label for="Non-Unicode">Sistema Non-Unicode</label>
+        </li>
+
+        <li>
+        <label>Revisar base de datos y compatibilidad con HANA:</label>
+        <ul>
+          <li><input type="checkbox" id="db-hana" /><label for="db-hana">SAP HANA (optimizada)</label></li>
+          <li><input type="checkbox" id="db-oracle" /><label for="db-oracle">Oracle Database</label></li>
+          <li><input type="checkbox" id="db-sqlserver" /><label for="db-sqlserver">Microsoft SQL Server</label></li>
+          <li><input type="checkbox" id="db-db2" /><label for="db-db2">IBM Db2</label></li>
+          <li><input type="checkbox" id="db-sybase" /><label for="db-sybase">Sybase ASE</label></li>
+        </ul>
+        <textarea placeholder="Fuente, acción recomendada, responsable" style="width:100%; height:40px;"></textarea>
+        </li>
+
+        <li><input type="checkbox" id="addons" /><label for="addons">Identificar add-ons instalados</label></li>
+        <li><input type="checkbox" id="interfaces" /><label for="interfaces">Revisar interfaces críticas con otros sistemas</label></li>
+        <li><input type="checkbox" id="mandantes" /><label for="mandantes">Documentar mandantes y Support Packages</label></li>
+      </ul>
+    </li>
+
+    <!-- 2️⃣ Datos y Código Z -->
+    <li style="list-style:none; margin-left:-20px; font-weight:bold; margin-top:15px;">Datos y Código Z</li>
+    <li>
+      <ul>
+        <li><input type="checkbox" id="objetos-z" /><label for="objetos-z">Identificar objetos Z y reportes custom</label></li>
+        <li><input type="checkbox" id="datos-maestros" /><label for="datos-maestros">Definir datos maestros y transaccionales a migrar</label></li>
+        <li><input type="checkbox" id="inconsistencias" /><label for="inconsistencias">Detectar inconsistencias o duplicados</label></li>
+        <li><input type="checkbox" id="programas-z" /><label for="programas-z">Verificar programas Z no compatibles con HANA</label></li>
+        <li><input type="checkbox" id="enhancements" /><label for="enhancements">Revisar enhancements, exits, BADI, BTE</label></li>
+      </ul>
+    </li>
+
+    <!-- 3️⃣ Infraestructura y herramientas -->
+    <li style="list-style:none; margin-left:-20px; font-weight:bold; margin-top:15px;">Infraestructura y herramientas</li>
+    <li>
+      <ul>
+        <li><input type="checkbox" id="hardware" /><label for="hardware">Verificar hardware o cloud compatible con S/4HANA</label></li>
+        <li><input type="checkbox" id="landscape" /><label for="landscape">Definir landscape destino (sandbox, QA, preprod, productivo)</label></li>
+        <li><input type="checkbox" id="estrategia-migracion" /><label for="estrategia-migracion">Definir estrategia de migración</label></li>
+        <li><input type="checkbox" id="herramientas-sap" /><label for="herramientas-sap">Herramientas SAP: SUM/DMO, Migration Cockpit, Custom Code Analyzer</label></li>
+        <li><input type="checkbox" id="backup-rollback" /><label for="backup-rollback">Definir plan de backup y rollback</label></li>
+      </ul>
+    </li>
+
+    <!-- 4️⃣ Planificación del proyecto -->
+    <li style="list-style:none; margin-left:-20px; font-weight:bold; margin-top:15px;">Planificación del proyecto</li>
+    <li>
+      <ul>
+        <li><input type="checkbox" id="alcance" /><label for="alcance">Definir alcance funcional y técnico</label></li>
+        <li><input type="checkbox" id="roles-responsables" /><label for="roles-responsables">Roles y responsables clave</label></li>
+        <li><input type="checkbox" id="entregables" /><label for="entregables">Entregables de cada fase</label></li>
+        <li><input type="checkbox" id="riesgos" /><label for="riesgos">Riesgos y plan de mitigación</label></li>
+        <li><input type="checkbox" id="cronograma" /><label for="cronograma">Cronograma estimado y milestones</label></li>
+        <li><input type="checkbox" id="pruebas" /><label for="pruebas">Definir estrategia de pruebas</label></li>
+        <li><input type="checkbox" id="capacitacion" /><label for="capacitacion">Plan de capacitación inicial de key users</label></li>
+      </ul>
+    </li>
+
+    <!-- 5️⃣ Evaluación de compatibilidad -->
+    <li style="list-style:none; margin-left:-20px; font-weight:bold; margin-top:15px;">Evaluación de compatibilidad</li>
+    <li>
+      <ul>
+        <li><input type="checkbox" id="procesos-negocio" /><label for="procesos-negocio">Procesos de negocio impactados</label></li>
+        <li><input type="checkbox" id="transacciones" /><label for="transacciones">Transacciones ECC con cambios en S/4HANA</label></li>
+        <li><input type="checkbox" id="objetos-criticos" /><label for="objetos-criticos">Objetos críticos a revisar</label></li>
+        <li><input type="checkbox" id="gaps" /><label for="gaps">Gaps funcionales/técnicos según Readiness Check</label></li>
+        <li><input type="checkbox" id="simplification-fiori" /><label for="simplification-fiori">Revisar Simplification List y Fiori impactados</label></li>
+      </ul>
+    </li>
+  </ul>
+
+ <!-- Herramientas SAP -->
+    <li style="margin-top:12px; list-style:none; font-weight:bold;">Herramientas de SAP</li>
+    <li>
+      <label>Maintenance Planner:</label> Evalúa compatibilidad y requisitos. <a href="https://help.sap.com/docs/FRUN/0a4e30bef4ec4b27862bc52a2dc1bed2/ae0cceefe8de4bf5bf4e8bd04529c1be.html" target="_blank">Más info</a><br>
+      <label>Readiness Check:</label> Detecta ajustes funcionales necesarios. <a href="https://help.sap.com/docs/cloud-alm/applicationhelp/sap-readiness-check?locale=es-ES" target="_blank">Más info</a><br>
+      <label>Custom Code Analyzer:</label> Identifica código Z a modificar. <a href="https://help.sap.com/docs/btp/sap-business-technology-platform/complexity-analysis" target="_blank">Más info</a>
+    </li>
+
+</div>
+
+<!-- Phase 3: Explore -->
+<button class="accordion phase-orange"><span></span>3. Explore</button>
+<div class="panel" style="border-color:#ff9933">
+<ul>
+    <!-- 1️⃣ Fit-to-Standard Workshops -->
+    <li>
+      <label>Fit-to-Standard Workshops (Comparar procesos estándar vs ECC):</label>
+      <ul>
+        <li>
+          <input type="checkbox" id="finance-fit" />
+          <label for="finance-fit">Finanzas (FI/CO)</label>
+          <textarea placeholder="Fuente, acción recomendada, responsable" style="width:100%; height:40px;"></textarea>
+        </li>
+        <li>
+          <input type="checkbox" id="logistics-fit" />
+          <label for="logistics-fit">Logística (MM, SD, PP)</label>
+          <textarea placeholder="Fuente, acción recomendada, responsable" style="width:100%; height:40px;"></textarea>
+        </li>
+        <li>
+          <input type="checkbox" id="hr-fit" />
+          <label for="hr-fit">Recursos Humanos (HCM)</label>
+          <textarea placeholder="Fuente, acción recomendada, responsable" style="width:100%; height:40px;"></textarea>
+        </li>
+        <li>
+          <input type="checkbox" id="other-modules-fit" />
+          <label for="other-modules-fit">Otros módulos / procesos relevantes</label>
+          <textarea placeholder="Fuente, acción recomendada, responsable" style="width:100%; height:40px;"></textarea>
+        </li>
+      </ul>
+    </li>
+
+    <!-- 2️⃣ Identificación de Gaps funcionales -->
+    <li>
+      <label>Identificación de gaps funcionales:</label>
+      <ul>
+        <li>
+          <input type="checkbox" id="business-partner-gap" />
+          <label for="business-partner-gap">Business Partner vs. Cliente / Proveedor en ECC</label>
+          <textarea placeholder="Fuente, acción recomendada, responsable" style="width:100%; height:40px;"></textarea>
+        </li>
+        <li>
+          <input type="checkbox" id="new-gl-gap" />
+          <label for="new-gl-gap">New GL (Contabilidad General Nueva)</label>
+          <textarea placeholder="Fuente, acción recomendada, responsable" style="width:100%; height:40px;"></textarea>
+        </li>
+        <li>
+          <input type="checkbox" id="material-ledger-gap" />
+          <label for="material-ledger-gap">Material Ledger / Valorización de inventario</label>
+          <textarea placeholder="Fuente, acción recomendada, responsable" style="width:100%; height:40px;"></textarea>
+        </li>
+        <li>
+          <input type="checkbox" id="other-gaps" />
+          <label for="other-gaps">Otros gaps funcionales detectados</label>
+          <textarea placeholder="Fuente, acción recomendada, responsable" style="width:100%; height:40px;"></textarea>
+        </li>
+      </ul>
+    </li>
+
+    <!-- 3️⃣ Integraciones -->
+    <li>
+      <label>Definir requerimientos de integración:</label>
+      <ul>
+        <li>
+          <input type="checkbox" id="sap-integrations" />
+          <label for="sap-integrations">Integración con otros sistemas SAP (BW, Ariba, SuccessFactors, etc.)</label>
+          <textarea placeholder="Fuente, acción recomendada, responsable" style="width:100%; height:40px;"></textarea>
+        </li>
+        <li>
+          <input type="checkbox" id="non-sap-integrations" />
+          <label for="non-sap-integrations">Integración con sistemas no SAP (CRM, PLM, WMS, etc.)</label>
+          <textarea placeholder="Fuente, acción recomendada, responsable" style="width:100%; height:40px;"></textarea>
+        </li>
+        <li>
+          <input type="checkbox" id="interface-specs" />
+          <label for="interface-specs">Definir especificaciones de interfaces (RFC, IDoc, API, Web Services)</label>
+          <textarea placeholder="Fuente, acción recomendada, responsable" style="width:100%; height:40px;"></textarea>
+        </li>
+      </ul>
+    </li>
+
+    <!-- 4️⃣ Documentación y resultados -->
+    <li>
+      <label>Documentación y resultados:</label>
+      <ul>
+        <li>
+          <input type="checkbox" id="fit-to-standard-docs" />
+          <label for="fit-to-standard-docs">Documentar procesos estándar adoptados</label>
+          <textarea placeholder="Fuente, acción recomendada, responsable" style="width:100%; height:40px;"></textarea>
+        </li>
+        <li>
+          <input type="checkbox" id="gaps-docs" />
+          <label for="gaps-docs">Documentar gaps y requerimientos de configuración</label>
+          <textarea placeholder="Fuente, acción recomendada, responsable" style="width:100%; height:40px;"></textarea>
+        </li>
+        <li>
+          <input type="checkbox" id="integration-docs" />
+          <label for="integration-docs">Documentar requerimientos de integración y dependencias</label>
+          <textarea placeholder="Fuente, acción recomendada, responsable" style="width:100%; height:40px;"></textarea>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+
+
+<!-- Phase 4: Realize -->
+<button class="accordion phase-purple"><span></span>4. Realize</button>
+<div class="panel" style="border-color:#8e44ad">
+  <ul>
+    <!-- 1️⃣ Conversión técnica -->
+    <li>
+      <label>Conversión técnica con SUM + DMO (ECC → S/4HANA):</label>
+      <ul>
+        <li>
+          <input type="checkbox" id="sum-dmo-prep" />
+          <label for="sum-dmo-prep">Preparar sistema ECC y prechecks con SUM</label>
+          <textarea placeholder="Fuente, acción recomendada, responsable" style="width:100%; height:40px;"></textarea>
+        </li>
+        <li>
+          <input type="checkbox" id="sum-dmo-execute" />
+          <label for="sum-dmo-execute">Ejecutar conversión técnica con DMO</label>
+          <textarea placeholder="Fuente, acción recomendada, responsable" style="width:100%; height:40px;"></textarea>
+        </li>
+        <li>
+          <input type="checkbox" id="sum-dmo-validate" />
+          <label for="sum-dmo-validate">Validar logs y errores post-conversión</label>
+          <textarea placeholder="Fuente, acción recomendada, responsable" style="width:100%; height:40px;"></textarea>
+        </li>
+      </ul>
+    </li>
+
+    <!-- 2️⃣ Configuración y ajustes funcionales -->
+    <li>
+      <label>Configuración y ajustes funcionales:</label>
+      <ul>
+        <li>
+          <input type="checkbox" id="config-finance" />
+          <label for="config-finance">FI/CO: Ajustes de contabilidad y controlling</label>
+          <textarea placeholder="Fuente, acción recomendada, responsable" style="width:100%; height:40px;"></textarea>
+        </li>
+        <li>
+          <input type="checkbox" id="config-logistics" />
+          <label for="config-logistics">MM/SD/PP: Ajustes logísticos y procesos</label>
+          <textarea placeholder="Fuente, acción recomendada, responsable" style="width:100%; height:40px;"></textarea>
+        </li>
+        <li>
+          <input type="checkbox" id="config-hr" />
+          <label for="config-hr">HCM: Ajustes de recursos humanos</label>
+          <textarea placeholder="Fuente, acción recomendada, responsable" style="width:100%; height:40px;"></textarea>
+        </li>
+        <li>
+          <input type="checkbox" id="config-other" />
+          <label for="config-other">Otros módulos / configuraciones específicas</label>
+          <textarea placeholder="Fuente, acción recomendada, responsable" style="width:100%; height:40px;"></textarea>
+        </li>
+      </ul>
+    </li>
+
+    <!-- 3️⃣ Migración de datos -->
+<li>
+  <label>Migración de datos con S/4HANA Migration Cockpit (maestros + saldos + transacciones abiertas):</label>
+  <ul>
+    <!-- Métodos de migración -->
+    <li>
+      <input type="checkbox" id="method-file-upload" />
+      <label for="method-file-upload">File Upload: Rellenar plantillas SAP (CSV/XML) y subir al sistema objetivo. Adecuado para volúmenes pequeños y requisitos simples.</label>
+      <textarea placeholder="Fuente, acción recomendada, responsable" style="width:100%; height:40px;"></textarea>
+    </li>
+    <li>
+      <input type="checkbox" id="method-staging-tables" />
+      <label for="method-staging-tables">Staging Tables: Cargar datos en tablas temporales antes de moverlos al sistema S/4HANA. Mejor para volúmenes grandes o complejos.</label>
+      <textarea placeholder="Fuente, acción recomendada, responsable" style="width:100%; height:40px;"></textarea>
+    </li>
+    <li>
+      <input type="checkbox" id="method-direct-transfer" />
+      <label for="method-direct-transfer">Direct Transfer: Transferencia directa desde un sistema SAP ERP legado al sistema S/4HANA.</label>
+      <textarea placeholder="Fuente, acción recomendada, responsable" style="width:100%; height:40px;"></textarea>
+    </li>
+
+    <!-- Pasos de migración -->
+    <li>
+      <input type="checkbox" id="data-master" />
+      <label for="data-master">Migrar datos maestros</label>
+      <textarea placeholder="Fuente, acción recomendada, responsable" style="width:100%; height:40px;"></textarea>
+    </li>
+    <li>
+      <input type="checkbox" id="data-saldos" />
+      <label for="data-saldos">Migrar saldos contables y de inventario</label>
+      <textarea placeholder="Fuente, acción recomendada, responsable" style="width:100%; height:40px;"></textarea>
+    </li>
+    <li>
+      <input type="checkbox" id="data-transacciones" />
+      <label for="data-transacciones">Migrar transacciones abiertas (pedidos, facturas, órdenes)</label>
+      <textarea placeholder="Fuente, acción recomendada, responsable" style="width:100%; height:40px;"></textarea>
+    </li>
+    <li>
+      <input type="checkbox" id="data-validation" />
+      <label for="data-validation">Validar consistencia y calidad de datos post-migración</label>
+      <textarea placeholder="Fuente, acción recomendada, responsable" style="width:100%; height:40px;"></textarea>
+    </li>
+  </ul>
+</li>
+
+
+    <!-- 4️⃣ Desarrollo de extensiones y adaptaciones -->
+    <li>
+      <label>Desarrollo de extensiones y adaptaciones:</label>
+      <ul>
+        <li>
+          <input type="checkbox" id="code-z-cds" />
+          <label for="code-z-cds">Migrar / reescribir código Z a CDS Views</label>
+          <textarea placeholder="Fuente, acción recomendada, responsable" style="width:100%; height:40px;"></textarea>
+        </li>
+        <li>
+          <input type="checkbox" id="fiori-extensions" />
+          <label for="fiori-extensions">Desarrollar Fiori Apps y adaptaciones UI</label>
+          <textarea placeholder="Fuente, acción recomendada, responsable" style="width:100%; height:40px;"></textarea>
+        </li>
+        <li>
+          <input type="checkbox" id="enhancements" />
+          <label for="enhancements">Revisar enhancements, BADI y exits para compatibilidad</label>
+          <textarea placeholder="Fuente, acción recomendada, responsable" style="width:100%; height:40px;"></textarea>
+        </li>
+      </ul>
+    </li>
+
+    <!-- 5️⃣ Pruebas unitarias e integrales -->
+    <li>
+      <label>Pruebas unitarias e integrales:</label>
+      <ul>
+        <li>
+          <input type="checkbox" id="unit-tests" />
+          <label for="unit-tests">Ejecutar pruebas unitarias de cada módulo</label>
+          <textarea placeholder="Fuente, acción recomendada, responsable" style="width:100%; height:40px;"></textarea>
+        </li>
+        <li>
+          <input type="checkbox" id="integration-tests" />
+          <label for="integration-tests">Pruebas de integración entre módulos y con sistemas externos</label>
+          <textarea placeholder="Fuente, acción recomendada, responsable" style="width:100%; height:40px;"></textarea>
+        </li>
+        <li>
+          <input type="checkbox" id="uat-tests" />
+          <label for="uat-tests">Pruebas UAT con usuarios clave</label>
+          <textarea placeholder="Fuente, acción recomendada, responsable" style="width:100%; height:40px;"></textarea>
+        </li>
+        <li>
+          <input type="checkbox" id="fiori-tests" />
+          <label for="fiori-tests">Validar Fiori Apps y reportes S/4HANA</label>
+          <textarea placeholder="Fuente, acción recomendada, responsable" style="width:100%; height:40px;"></textarea>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+
+<!-- Phase 5: Deploy -->
+<button class="accordion phase-green"><span></span>5. Deploy</button>
+<div class="panel" style="border-color:#28a745">
+  <ul>
+    <!-- 1️⃣ Plan de Cut-over -->
+    <li style="font-weight:bold;">🔹 Plan de Cut-over</li>
+    <li>
+      <input type="checkbox" id="cutover-definicion" />
+      <label for="cutover-definicion">Definición del Plan de Cut-over</label>
+      <textarea placeholder="Fuente, acción recomendada, responsable" style="width:100%; height:40px;"></textarea>
+    </li>
+    <li>
+      <input type="checkbox" id="cutover-datos-maestros" />
+      <label for="cutover-datos-maestros">Plan de Cut-over incluye migración de datos maestros</label>
+      <textarea placeholder="Fuente, acción recomendada, responsable" style="width:100%; height:40px;"></textarea>
+    </li>
+    <li>
+      <input type="checkbox" id="cutover-datos-transaccionales" />
+      <label for="cutover-datos-transaccionales">Plan de Cut-over incluye migración de datos transaccionales</label>
+      <textarea placeholder="Fuente, acción recomendada, responsable" style="width:100%; height:40px;"></textarea>
+    </li>
+    <li>
+      <input type="checkbox" id="cutover-apagado-legacy" />
+      <label for="cutover-apagado-legacy">Plan de Cut-over incluye apagado de sistemas legacy</label>
+      <textarea placeholder="Fuente, acción recomendada, responsable" style="width:100%; height:40px;"></textarea>
+    </li>
+    <li>
+      <input type="checkbox" id="cutover-validacion" />
+      <label for="cutover-validacion">Validación del plan con negocio y TI</label>
+      <textarea placeholder="Fuente, acción recomendada, responsable" style="width:100%; height:40px;"></textarea>
+    </li>
+
+    <!-- 2️⃣ Configuración de Producción -->
+    <li style="font-weight:bold; margin-top:12px;">🔹 Configuración del Ambiente Productivo</li>
+    <li>
+      <input type="checkbox" id="prod-env-setup" />
+      <label for="prod-env-setup">Configuración del ambiente productivo finalizada</label>
+      <textarea placeholder="Fuente, acción recomendada, responsable" style="width:100%; height:40px;"></textarea>
+    </li>
+    <li>
+      <input type="checkbox" id="prod-env-validacion" />
+      <label for="prod-env-validacion">Validación de readiness del ambiente productivo</label>
+      <textarea placeholder="Fuente, acción recomendada, responsable" style="width:100%; height:40px;"></textarea>
+    </li>
+
+    <!-- 3️⃣ Pruebas Finales -->
+    <li style="font-weight:bold; margin-top:12px;">🔹 Pruebas Finales</li>
+    <li>
+      <input type="checkbox" id="pruebas-ende2end" />
+      <label for="pruebas-ende2end">Realizar pruebas end-to-end de procesos críticos</label>
+      <textarea placeholder="Fuente, acción recomendada, responsable" style="width:100%; height:40px;"></textarea>
+    </li>
+    <li>
+      <input type="checkbox" id="pruebas-performance" />
+      <label for="pruebas-performance">Validación de performance y estabilidad</label>
+      <textarea placeholder="Fuente, acción recomendada, responsable" style="width:100%; height:40px;"></textarea>
+    </li>
+    <li>
+      <input type="checkbox" id="pruebas-aceptacion" />
+      <label for="pruebas-aceptacion">Aprobación de pruebas por usuarios clave</label>
+      <textarea placeholder="Fuente, acción recomendada, responsable" style="width:100%; height:40px;"></textarea>
+    </li>
+
+    <!-- 4️⃣ Capacitación de Usuarios -->
+    <li style="font-weight:bold; margin-top:12px;">🔹 Capacitación de Usuarios</li>
+    <li>
+      <input type="checkbox" id="training-usuarios-clave" />
+      <label for="training-usuarios-clave">Finalizar capacitación de usuarios clave</label>
+      <textarea placeholder="Fuente, acción recomendada, responsable" style="width:100%; height:40px;"></textarea>
+    </li>
+    <li>
+      <input type="checkbox" id="training-documentacion" />
+      <label for="training-documentacion">Documentación y materiales de capacitación disponibles</label>
+      <textarea placeholder="Fuente, acción recomendada, responsable" style="width:100%; height:40px;"></textarea>
+    </li>
+
+    <!-- 5️⃣ Ejecución del Go-Live -->
+    <li style="font-weight:bold; margin-top:12px;">🔹 Go-Live</li>
+    <li>
+      <input type="checkbox" id="go-live-ejecucion" />
+      <label for="go-live-ejecucion">Ejecución del Go-Live (producción habilitada)</label>
+      <textarea placeholder="Fuente, acción recomendada, responsable" style="width:100%; height:40px;"></textarea>
+    </li>
+    <li>
+      <input type="checkbox" id="go-live-estabilidad" />
+      <label for="go-live-estabilidad">Confirmación de estabilidad post-Go-Live</label>
+      <textarea placeholder="Fuente, acción recomendada, responsable" style="width:100%; height:40px;"></textarea>
+    </li>
+
+    <!-- 6️⃣ Hypercare -->
+    <li style="font-weight:bold; margin-top:12px;">🔹 Hypercare</li>
+    <li>
+      <input type="checkbox" id="hypercare-activacion" />
+      <label for="hypercare-activacion">Activar soporte Hypercare post Go-Live</label>
+      <textarea placeholder="Fuente, acción recomendada, responsable" style="width:100%; height:40px;"></textarea>
+    </li>
+    <li>
+      <input type="checkbox" id="hypercare-duracion" />
+      <label for="hypercare-duracion">Duración del periodo de Hypercare definida</label>
+      <textarea placeholder="Fuente, acción recomendada, responsable" style="width:100%; height:40px;"></textarea>
+    </li>
+
+    <!-- 7️⃣ Handover a Operaciones -->
+    <li style="font-weight:bold; margin-top:12px;">🔹 Entrega a Operaciones</li>
+    <li>
+      <input type="checkbox" id="handover-documentacion" />
+      <label for="handover-documentacion">Entrega completa de documentación técnica</label>
+      <textarea placeholder="Fuente, acción recomendada, responsable" style="width:100%; height:40px;"></textarea>
+    </li>
+    <li>
+      <input type="checkbox" id="handover-roles" />
+      <label for="handover-roles">Roles y responsabilidades de IT Ops definidos</label>
+      <textarea placeholder="Fuente, acción recomendada, responsable" style="width:100%; height:40px;"></textarea>
+    </li>
+  </ul>
+  <p style="margin-top:10px;">
+    Consulta la guía de ayuda para el **Deploy phase** en la metodología SAP Activate:  
+    <a href="https://www.leanix.net/en/wiki/tech-transformation/sap-activate-methodology?#Deploy-phase" target="_blank">LeanIX – SAP Activate Methodology: Deploy phase</a>
+  </p>
+</div>
+
+
+<!-- Phase 6: Run -->
+<button class="accordion phase-blue"><span></span>6. Run</button>
+<div class="panel" style="border-color:#0073e6">
+  <ul>
+    <!-- 1️⃣ Hypercare y Estabilización -->
+    <li style="font-weight:bold;">🔹 Hypercare y Estabilización</li>
+    <li>
+      <input type="checkbox" id="run-hypercare" />
+      <label for="run-hypercare">Soporte post Go-Live y estabilización del sistema productivo</label>
+      <textarea placeholder="Fuente, acción recomendada, responsable" style="width:100%; height:40px;"></textarea>
+    </li>
+    <li>
+      <input type="checkbox" id="run-incidencias" />
+      <label for="run-incidencias">Gestión y resolución de incidencias iniciales</label>
+      <textarea placeholder="Fuente, acción recomendada, responsable" style="width:100%; height:40px;"></textarea>
+    </li>
+
+    <!-- 2️⃣ Soporte Operacional -->
+    <li style="font-weight:bold; margin-top:12px;">🔹 Soporte Operacional</li>
+    <li>
+      <input type="checkbox" id="run-monitoring" />
+      <label for="run-monitoring">Monitoreo continuo del sistema y alertas proactivas</label>
+      <textarea placeholder="Fuente, acción recomendada, responsable" style="width:100%; height:40px;"></textarea>
+    </li>
+    <li>
+      <input type="checkbox" id="run-itsm" />
+      <label for="run-itsm">Implementar procesos de IT Service Management (ITSM)</label>
+      <textarea placeholder="Fuente, acción recomendada, responsable" style="width:100%; height:40px;"></textarea>
+    </li>
+    <li>
+      <input type="checkbox" id="run-health-check" />
+      <label for="run-health-check">Revisiones periódicas de salud del sistema (health checks)</label>
+      <textarea placeholder="Fuente, acción recomendada, responsable" style="width:100%; height:40px;"></textarea>
+    </li>
+
+    <!-- 3️⃣ Gobernanza y Mejora Continua -->
+    <li style="font-weight:bold; margin-top:12px;">🔹 Gobernanza y Mejora Continua</li>
+    <li>
+      <input type="checkbox" id="run-governance" />
+      <label for="run-governance">Definir modelo de gobernanza para cambios y mejoras</label>
+      <textarea placeholder="Fuente, acción recomendada, responsable" style="width:100%; height:40px;"></textarea>
+    </li>
+    <li>
+      <input type="checkbox" id="run-roadmap" />
+      <label for="run-roadmap">Definir roadmap de mejoras (Fiori, Embedded Analytics, ML, RPA)</label>
+      <textarea placeholder="Fuente, acción recomendada, responsable" style="width:100%; height:40px;"></textarea>
+    </li>
+    <li>
+      <input type="checkbox" id="run-optimization" />
+      <label for="run-optimization">Optimización de procesos y experiencia de usuario</label>
+      <textarea placeholder="Fuente, acción recomendada, responsable" style="width:100%; height:40px;"></textarea>
+    </li>
+
+    <!-- 4️⃣ Rendimiento y Estabilidad -->
+    <li style="font-weight:bold; margin-top:12px;">🔹 Rendimiento y Estabilidad</li>
+    <li>
+      <input type="checkbox" id="run-performance-tuning" />
+      <label for="run-performance-tuning">Ajustes y tuning de performance continuo</label>
+      <textarea placeholder="Fuente, acción recomendada, responsable" style="width:100%; height:40px;"></textarea>
+    </li>
+    <li>
+      <input type="checkbox" id="run-capacity" />
+      <label for="run-capacity">Gestión de capacidad y escalabilidad del sistema</label>
+      <textarea placeholder="Fuente, acción recomendada, responsable" style="width:100%; height:40px;"></textarea>
+    </li>
+
+    <!-- 5️⃣ Innovación y Adopción -->
+    <li style="font-weight:bold; margin-top:12px;">🔹 Innovación y Adopción</li>
+    <li>
+      <input type="checkbox" id="run-innovation" />
+      <label for="run-innovation">Evaluación e implementación de nuevas innovaciones SAP</label>
+      <textarea placeholder="Fuente, acción recomendada, responsable" style="width:100%; height:40px;"></textarea>
+    </li>
+    <li>
+      <input type="checkbox" id="run-adoption" />
+      <label for="run-adoption">Facilitar la adopción de nuevas funcionalidades por el negocio</label>
+      <textarea placeholder="Fuente, acción recomendada, responsable" style="width:100%; height:40px;"></textarea>
+    </li>
+
+    <!-- 6️⃣ Soporte y Capacitación Continua -->
+    <li style="font-weight:bold; margin-top:12px;">🔹 Soporte y Capacitación Continua</li>
+    <li>
+      <input type="checkbox" id="run-support-tools" />
+      <label for="run-support-tools">Uso de SAP ONE Support Launchpad para gestión de tickets e incidencias</label>
+      <textarea placeholder="Fuente, acción recomendada, responsable" style="width:100%; height:40px;"></textarea>
+    </li>
+    <li>
+      <input type="checkbox" id="run-learning" />
+      <label for="run-learning">Acceso a SAP Learning Hub y Value Maps para actualización de skills</label>
+      <textarea placeholder="Fuente, acción recomendada, responsable" style="width:100%; height:40px;"></textarea>
+    </li>
+  </ul>
+
+  <p style="margin-top:10px;">
+    Consulta la guía de ayuda para la **Run phase** en la metodología SAP Activate:  
+    <a href="https://www.leanix.net/en/wiki/tech-transformation/sap-activate-methodology?#Run-phase" target="_blank">LeanIX – SAP Activate Methodology: Run phase</a>
+  </p>
+</div>
+
+
+  <!-- Botón para generar resumen -->
+<button onclick="generarResumen()" style="padding:10px 20px; font-size:1em; border:none; border-radius:5px; background:#004d99; color:white; cursor:pointer; margin-top:10px;">
+  Generar Resumen
+</button>
+
+<!-- Resumen -->
+<div id="resumen" style="margin-top:15px;">
+  <h2>Resumen de Planeación</h2>
+  <div id="contenidoResumen" style="padding:10px; border:1px solid #ccc; border-radius:5px; background:#f9f9f9;">
+    Completa los campos y presiona "Generar Resumen".
+  </div>
+</div>
+
+<!-- Botones de descarga -->
+<div style="margin-top:10px;">
+  <button onclick="descargarPDF()" style="padding:10px 20px; font-size:1em; border:none; border-radius:5px; background:#28a745; color:white; cursor:pointer; margin-right:10px;">
+    Descargar PDF
+  </button>
+  <button onclick="descargarWord()" style="padding:10px 20px; font-size:1em; border:none; border-radius:5px; background:#ff6600; color:white; cursor:pointer;">
+    Descargar Word
+  </button>
+</div>
+
+<!-- Librerías -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script>
+  // Accordion funcional
+  const acc = document.getElementsByClassName("accordion");
+  for(let i=0;i<acc.length;i++){
+    acc[i].addEventListener("click", function(){
+      this.classList.toggle("active");
+      const panel = this.nextElementSibling;
+      panel.style.display = (panel.style.display==="block") ? "none" : "block";
+    });
+  }
+
+  function generarResumen() {
+    const v = id => (document.getElementById(id)?.value || "").trim();
+    const c = id => (document.getElementById(id)?.checked ? "✔" : "✖");
+    const fmt = str => (str ? str.replace(/\n/g, "<br>") : "");
+
+    const renderCheckboxList = (items) => {
+      return `<ul style="list-style:none; padding-left:15px; margin:0;">
+        ${items.map(item => `<li style="margin-bottom:5px; display:flex; align-items:flex-start;">
+          ${item.label}: ${c(item.id)}
+        </li>`).join("")}
+      </ul>`;
+    };
+    
+    const proyecto = v("proyecto");
+    const elaboro = v("elaboro");
+    const fecha = new Date().toLocaleDateString(); // Fecha actual
+
+    const html = `
+
+
+  <!-- Diagrama de fases estilo flecha -->
+  <section style="text-align:center; margin-bottom:20px;">
+    <div class="flowchart-horizontal">
+      <div class="phase phase-orange first">1. Discover</div>
+      <div class="phase phase-green">2. Prepare</div>
+      <div class="phase phase-orange">3. Explore</div>
+      <div class="phase phase-purple">4. Realize</div>
+      <div class="phase phase-green">5. Deploy</div>
+      <div class="phase phase-blue last small">6. Run</div>
+    </div>
+  </section>
+
+  <style>
+    .flowchart-horizontal {
+      display: flex;
+      flex-wrap: nowrap;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+      font-family: Arial, sans-serif;
+    }
+    .phase {
+      position: relative;
+      color: white;
+      font-weight: bold;
+      text-align: center;
+      padding: 12px 24px;
+      min-width: 100px;
+      margin-right: -5px; 
+      clip-path: polygon(0 0%, 90% 0%, 100% 50%, 90% 100%, 0 100%, 10% 50%);
+      box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+      transition: transform 0.2s;
+    }
+    .phase:hover { transform: translateY(-3px) scale(1.05); }
+    .phase-orange { background-color: #ff9933; }
+    .phase-green  { background-color: #28a745; }
+    .phase-purple { background-color: #8e44ad; }
+    .phase-blue   { background-color: #0073e6; }
+    .phase.first { clip-path: polygon(0 0%, 90% 0%, 100% 50%, 90% 100%, 0 100%); }
+    .phase.last { clip-path: polygon(0 0%, 90% 0%, 100% 50%, 90% 100%, 0 100%, 10% 50%); margin-right: 0; }
+    .phase.small { min-width: 100px; padding: 10px 16px; }
+    @media (max-width: 600px) {
+      .flowchart-horizontal { flex-direction: column; align-items: stretch; }
+      .phase { clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); margin-right: 0; margin-bottom: 8px; }
+      .phase.small { min-width: auto; padding: 12px 8px; }
+    }
+  </style>
+
+    <!-- Discover -->
+      <section style="border-left:4px solid #ff9933; background:#fff8f0; border-radius:5px; padding:12px; margin-bottom:15px;">
+      <h2 style="color:#ff9933; margin-top:0;">1. Fase: Discover</h2>
+
+  <p><strong>Identificación de necesidades</strong></p>
+  <p><em>Necesidad de negocio:</em><br>${fmt(v("necesidadNegocio"))}</p>
+  <p><em>Objetivos estratégicos:</em><br>${fmt(v("objetivosEstrategicos"))}</p>
+
+  <p><strong>Exploración de capacidades de SAP</strong></p>
+  <p><em>Funcionalidades clave:</em> ${v("funcionalidadesClave")}</p>
+  <p><em>Beneficios esperados:</em><br>${fmt(v("beneficiosEsperados"))}</p>
+
+  <p><strong>Readiness y Alineación</strong></p>
+  ${renderCheckboxList([
+    { id: "stakeholdersAlineados", label: "Stakeholders alineados" },
+    { id: "equipoInterno", label: "Equipo interno identificado" },
+    { id: "patrocinioEjecutivo", label: "Patrocinio ejecutivo confirmado" }
+  ])}
+  <p><em>Riesgos identificados:</em><br>${fmt(v("riesgosDiscover"))}</p>
+
+  <p><strong>Estrategia y Roadmap</strong></p>
+  ${renderCheckboxList([
+    { id: "estrategiaGreenfield", label: "Greenfield" },
+    { id: "estrategiaBrownfield", label: "Brownfield" },
+    { id: "estrategiaHybrid", label: "Híbrido" }
+  ])}
+  <p><em>Roadmap inicial:</em><br>${fmt(v("roadmapDiscover"))}</p>
+
+  <p><strong>Análisis de Arquitectura Actual</strong></p>
+  <p>${fmt(v("landscapeActual"))}</p>
+
+  <p><strong>Deliverables clave</strong></p>
+  ${renderCheckboxList([
+    { id: "deliverableBusinessCase", label: "Business Case documentado" },
+    { id: "deliverableRoadmap", label: "Roadmap definido" },
+    { id: "deliverableScope", label: "Alcance preliminar" },
+    { id: "deliverableEstrategia", label: "Estrategia de adopción" }
+  ])}
+</section>
+
+<!-- 2. Prepare -->
+<section style="border-left:4px solid #28a745; background:#f3fff0; border-radius:5px; padding:12px; margin-bottom:15px;">
+  <h2 style="color:#28a745; margin-top:0;">2. Fase: Prepare</h2>
+
+  <p><strong>Análisis inicial</strong></p>
+  <p><em>Alcance:</em> ${v("alcancePrepEval")}</p>
+  <p><em>Versión ECC actual:</em> ${v("eccVersion")}</p>
+  <p><em>Dependencias técnicas:</em><br>${fmt(v("dependenciasTecnicas"))}</p>
+  ${renderCheckboxList([
+    { id: "optBrownfield", label: "Brownfield" },
+    { id: "optGreenfield", label: "Greenfield" },
+    { id: "optHybrid", label: "Hybrid" }
+  ])}
+  <p><em>Observaciones:</em><br>${fmt(v("obsMigracion"))}</p>
+
+  <p><strong>Estado del sistema actual</strong></p>
+  ${renderCheckboxList([
+    { id: "ecc-ehp0-5", label: "SAP ECC 6 EHP0-5" },
+    { id: "ecc-ehp6-8", label: "SAP ECC 6 EHP6-8" },
+    { id: "system-unicode", label: "Unicode" },
+    { id: "system-non-unicode", label: "Non-Unicode" }
+  ])}
+
+  <p><strong>Bases de datos:</strong></p>
+  ${renderCheckboxList([
+    { id: "db-hana", label: "HANA" },
+    { id: "db-oracle", label: "Oracle" },
+    { id: "db-sqlserver", label: "SQL Server" },
+    { id: "db-db2", label: "Db2" },
+    { id: "db-sybase", label: "Sybase" }
+  ])}
+
+  <p><strong>Datos y Código Z</strong></p>
+  ${renderCheckboxList([
+    { id: "objetos-z", label: "Objetos Z" },
+    { id: "datos-maestros", label: "Datos maestros y transaccionales" },
+    { id: "inconsistencias", label: "Inconsistencias / duplicados" },
+    { id: "programas-z", label: "Programas Z no compatibles" },
+    { id: "enhancements", label: "Enhancements / Exits / BADI / BTE" }
+  ])}
+
+  <p><strong>Infraestructura y herramientas</strong></p>
+  ${renderCheckboxList([
+    { id: "hardware", label: "Hardware / Cloud" },
+    { id: "landscape", label: "Landscape destino" },
+    { id: "estrategia-migracion", label: "Estrategia de migración" },
+    { id: "herramientas-sap", label: "Herramientas SAP" },
+    { id: "backup-rollback", label: "Plan backup & rollback" }
+  ])}
+
+  <p><strong>Planificación del proyecto</strong></p>
+  ${renderCheckboxList([
+    { id: "alcance", label: "Alcance funcional y técnico" },
+    { id: "roles-responsables", label: "Roles y responsables" },
+    { id: "entregables", label: "Entregables por fase" },
+    { id: "riesgos", label: "Riesgos y mitigación" },
+    { id: "cronograma", label: "Cronograma y milestones" },
+    { id: "pruebas", label: "Estrategia de pruebas" },
+    { id: "capacitacion", label: "Capacitación de key users" }
+  ])}
+
+  <p><strong>Evaluación de compatibilidad</strong></p>
+  ${renderCheckboxList([
+    { id: "procesos-negocio", label: "Procesos impactados" },
+    { id: "transacciones", label: "Transacciones ECC con cambios" },
+    { id: "objetos-criticos", label: "Objetos críticos" },
+    { id: "gaps", label: "Gaps técnicos/funcionales" },
+    { id: "simplification-fiori", label: "Simplification List / Fiori" }
+  ])}
+
+  <p><strong>Herramientas SAP</strong></p>
+  ${renderCheckboxList([
+    { id: "maintenance-planner", label: "Maintenance Planner → Verificar compatibilidad" },
+    { id: "readiness-check", label: "Readiness Check → Ajustes funcionales" },
+    { id: "custom-code-analyzer", label: "Custom Code Analyzer → Código Z a modificar" }
+  ])}
+</section>
+      
+
+      <!-- 3. Explore -->
+<section style="border-left:4px solid #ff9933; background:#fff8f0; border-radius:5px; padding:12px; margin-bottom:15px;">
+  <h2 style="color:#ff9933; margin-top:0;">3. Fase: Explore</h2>
+
+  <p><strong>Fit-to-Standard Workshops:</strong></p>
+  ${renderCheckboxList([
+    { id: "finance-fit", label: "Finanzas (FI/CO)" },
+    { id: "logistics-fit", label: "Logística (MM, SD, PP)" },
+    { id: "hr-fit", label: "Recursos Humanos (HCM)" },
+    { id: "other-modules-fit", label: "Otros módulos / procesos relevantes" }
+  ])}
+
+  <p><strong>Identificación de gaps funcionales:</strong></p>
+  ${renderCheckboxList([
+    { id: "business-partner-gap", label: "Business Partner vs. Cliente/Proveedor" },
+    { id: "new-gl-gap", label: "New GL (Contabilidad General Nueva)" },
+    { id: "material-ledger-gap", label: "Material Ledger / Valorización inventario" },
+    { id: "other-gaps", label: "Otros gaps funcionales detectados" }
+  ])}
+
+  <p><strong>Integraciones:</strong></p>
+  ${renderCheckboxList([
+    { id: "sap-integrations", label: "Integración con otros sistemas SAP" },
+    { id: "non-sap-integrations", label: "Integración con sistemas no SAP" },
+    { id: "interface-specs", label: "Especificaciones de interfaces (RFC, IDoc, API, WS)" }
+  ])}
+
+  <p><strong>Documentación y resultados:</strong></p>
+  ${renderCheckboxList([
+    { id: "fit-to-standard-docs", label: "Documentar procesos estándar adoptados" },
+    { id: "gaps-docs", label: "Documentar gaps y requerimientos de configuración" },
+    { id: "integration-docs", label: "Documentar requerimientos de integración" }
+  ])}
+</section>
+
+    <!-- 4. Realize -->
+<section style="border-left:4px solid #8e44ad; background:#f5f0ff; border-radius:5px; padding:12px; margin-bottom:15px;">
+  <h2 style="color:#8e44ad; margin-top:0;">4. Fase: Realize</h2>
+
+  <p><strong>Conversión técnica con SUM + DMO (ECC → S/4HANA):</strong></p>
+  ${renderCheckboxList([
+    { id: "sum-dmo-prep", label: "Preparar sistema ECC y prechecks con SUM" },
+    { id: "sum-dmo-execute", label: "Ejecutar conversión técnica con DMO" },
+    { id: "sum-dmo-validate", label: "Validar logs y errores post-conversión" }
+  ])}
+  <p><em>Observaciones:</em><br>${fmt(v("obs-sum-dmo"))}</p>
+
+  <p><strong>Configuración y ajustes funcionales:</strong></p>
+  ${renderCheckboxList([
+    { id: "config-finance", label: "FI/CO: Ajustes de contabilidad y controlling" },
+    { id: "config-logistics", label: "MM/SD/PP: Ajustes logísticos y procesos" },
+    { id: "config-hr", label: "HCM: Ajustes de recursos humanos" },
+    { id: "config-other", label: "Otros módulos / configuraciones específicas" }
+  ])}
+  <p><em>Observaciones:</em><br>${fmt(v("obs-config"))}</p>
+
+  <p><strong>Migración de datos (Migration Cockpit):</strong></p>
+  ${renderCheckboxList([
+    { id: "method-file-upload", label: "File Upload: Rellenar plantillas SAP (CSV/XML)" },
+    { id: "method-staging-tables", label: "Staging Tables: Cargar datos en tablas temporales" },
+    { id: "method-direct-transfer", label: "Direct Transfer: Transferencia directa desde SAP ERP" },
+    { id: "data-master", label: "Migrar datos maestros" },
+    { id: "data-saldos", label: "Migrar saldos contables y de inventario" },
+    { id: "data-transacciones", label: "Migrar transacciones abiertas" },
+    { id: "data-validation", label: "Validar consistencia y calidad de datos post-migración" }
+  ])}
+  <p><em>Observaciones:</em><br>${fmt(v("obs-migracion-datos"))}</p>
+
+  <p><strong>Desarrollo de extensiones y adaptaciones:</strong></p>
+  ${renderCheckboxList([
+    { id: "code-z-cds", label: "Migrar / reescribir código Z a CDS Views" },
+    { id: "fiori-extensions", label: "Desarrollar Fiori Apps y adaptaciones UI" },
+    { id: "enhancements", label: "Revisar enhancements, BADI y exits para compatibilidad" }
+  ])}
+  <p><em>Observaciones:</em><br>${fmt(v("obs-extensiones"))}</p>
+
+  <p><strong>Pruebas unitarias e integrales:</strong></p>
+  ${renderCheckboxList([
+    { id: "unit-tests", label: "Ejecutar pruebas unitarias de cada módulo" },
+    { id: "integration-tests", label: "Pruebas de integración entre módulos y sistemas externos" },
+    { id: "uat-tests", label: "Pruebas UAT con usuarios clave" },
+    { id: "fiori-tests", label: "Validar Fiori Apps y reportes S/4HANA" }
+  ])}
+  <p><em>Observaciones:</em><br>${fmt(v("obs-pruebas"))}</p>
+</section>
+
+            <!-- 5. Deploy -->
+      <section style="border-left:4px solid #28a745; background:#f3fff0; border-radius:5px; padding:12px; margin-bottom:15px;">
+        <h2 style="color:#28a745; margin-top:0;">5. Fase: Deploy</h2>
+
+        <h3>Plan de Cut-over</h3>
+        ${renderCheckboxList([
+          { id: "cutover-definicion", label: "Definición del Plan de Cut-over" },
+          { id: "cutover-datos-maestros", label: "Incluye migración de datos maestros" },
+          { id: "cutover-datos-transaccionales", label: "Incluye migración de datos transaccionales" },
+          { id: "cutover-apagado-legacy", label: "Incluye apagado de sistemas legacy" },
+          { id: "cutover-validacion", label: "Validación del plan con negocio y TI" }
+        ])}
+
+        <h3>Configuración del Ambiente Productivo</h3>
+        ${renderCheckboxList([
+          { id: "prod-env-setup", label: "Configuración del ambiente productivo finalizada" },
+          { id: "prod-env-validacion", label: "Validación de readiness del ambiente productivo" }
+        ])}
+
+        <h3>Pruebas Finales</h3>
+        ${renderCheckboxList([
+          { id: "pruebas-ende2end", label: "Pruebas end-to-end de procesos críticos" },
+          { id: "pruebas-performance", label: "Validación de performance y estabilidad" },
+          { id: "pruebas-aceptacion", label: "Aprobación de pruebas por usuarios clave" }
+        ])}
+
+        <h3>Capacitación de Usuarios</h3>
+        ${renderCheckboxList([
+          { id: "training-usuarios-clave", label: "Finalizar capacitación de usuarios clave" },
+          { id: "training-documentacion", label: "Documentación y materiales disponibles" }
+        ])}
+
+        <h3>Go-Live</h3>
+        ${renderCheckboxList([
+          { id: "go-live-ejecucion", label: "Ejecución del Go-Live" },
+          { id: "go-live-estabilidad", label: "Confirmación de estabilidad post Go-Live" }
+        ])}
+
+        <h3>Hypercare</h3>
+        ${renderCheckboxList([
+          { id: "hypercare-activacion", label: "Activar soporte Hypercare" },
+          { id: "hypercare-duracion", label: "Duración del periodo de Hypercare definida" }
+        ])}
+
+        <h3>Entrega a Operaciones</h3>
+        ${renderCheckboxList([
+          { id: "handover-documentacion", label: "Entrega completa de documentación técnica" },
+          { id: "handover-roles", label: "Roles y responsabilidades de IT Ops definidos" }
+        ])}
+
+        <p style="margin-top:10px;">
+          Consulta la guía de ayuda para el <strong>Deploy phase</strong> en la metodología SAP Activate:<br>
+          <a href="https://www.leanix.net/en/wiki/tech-transformation/sap-activate-methodology?#Deploy-phase" target="_blank">
+            LeanIX – SAP Activate Methodology: Deploy phase
+          </a>
+        </p>
+      </section>
+
+
+            <!-- 6. Run -->
+      <section style="border-left:4px solid #0073e6; background:#f0f8ff; border-radius:5px; padding:12px; margin-bottom:15px;">
+        <h2 style="color:#0073e6; margin-top:0;">6. Fase: Run</h2>
+
+        <h3>Hypercare y Estabilización</h3>
+        ${renderCheckboxList([
+          { id: "run-hypercare", label: "Soporte post Go-Live y estabilización del sistema productivo" },
+          { id: "run-incidencias", label: "Gestión y resolución de incidencias iniciales" }
+        ])}
+
+        <h3>Soporte Operacional</h3>
+        ${renderCheckboxList([
+          { id: "run-monitoring", label: "Monitoreo continuo del sistema y alertas proactivas" },
+          { id: "run-itsm", label: "Implementar procesos de IT Service Management (ITSM)" },
+          { id: "run-health-check", label: "Revisiones periódicas de salud del sistema (health checks)" }
+        ])}
+
+        <h3>Gobernanza y Mejora Continua</h3>
+        ${renderCheckboxList([
+          { id: "run-governance", label: "Definir modelo de gobernanza para cambios y mejoras" },
+          { id: "run-roadmap", label: "Definir roadmap de mejoras (Fiori, Embedded Analytics, ML, RPA)" },
+          { id: "run-optimization", label: "Optimización de procesos y experiencia de usuario" }
+        ])}
+
+        <h3>Rendimiento y Estabilidad</h3>
+        ${renderCheckboxList([
+          { id: "run-performance-tuning", label: "Ajustes y tuning de performance continuo" },
+          { id: "run-capacity", label: "Gestión de capacidad y escalabilidad del sistema" }
+        ])}
+
+        <h3>Innovación y Adopción</h3>
+        ${renderCheckboxList([
+          { id: "run-innovation", label: "Evaluación e implementación de nuevas innovaciones SAP" },
+          { id: "run-adoption", label: "Facilitar la adopción de nuevas funcionalidades por el negocio" }
+        ])}
+
+        <h3>Soporte y Capacitación Continua</h3>
+        ${renderCheckboxList([
+          { id: "run-support-tools", label: "Uso de SAP ONE Support Launchpad para gestión de tickets e incidencias" },
+          { id: "run-learning", label: "Acceso a SAP Learning Hub y Value Maps para actualización de skills" }
+        ])}
+      </section>
+
+    
+      <!-- Información del proyecto al final -->
+      <section style="border-top:1px solid #ccc; margin-top:20px; padding-top:10px; font-size:0.95em;">
+      <p><strong>Proyecto:</strong> ${proyecto || "—"}</p>
+        <p><strong>Elaboró:</strong> ${elaboro || "—"}</p>
+        <p><strong>Fecha:</strong> ${fecha}</p>
+      </section>
+
+      `;
+
+    document.getElementById("contenidoResumen").innerHTML = html;
+    document.getElementById("resumen").scrollIntoView({ behavior: "smooth" });
+  }
+
+// Descargar PDF
+function descargarPDF() {
+  const { jsPDF } = window.jspdf;
+  const contenido = document.getElementById("contenidoResumen");
+  if (!contenido.innerHTML.trim()) { 
+    alert("Genera primero el resumen"); 
+    return; 
+  }
+
+  const doc = new jsPDF({ orientation: "p", unit: "pt", format: "a4" });
+
+  const marginLeft = 15; // más cerca del borde izquierdo
+  const marginRight = 35; // espacio en el lado derecho
+  const pageWidth = doc.internal.pageSize.getWidth();
+  const pageHeight = doc.internal.pageSize.getHeight();
+
+  const headerHeight = 70;
+  const footerHeight = 80;
+  const bottomMargin = 65;
+
+  const proyecto = document.getElementById("proyecto")?.value || "—";
+  const elaboro = document.getElementById("elaboro")?.value || "—";
+  const fecha = new Date().toLocaleDateString();
+
+  const contentWidth = pageWidth - marginLeft - marginRight;
+
+  doc.html(contenido, {
+    x: marginLeft,
+    y: marginLeft + headerHeight,
+    html2canvas: { scale: 0.65, width: contentWidth },
+    callback: function(doc) {
+      const pageCount = doc.internal.getNumberOfPages();
+
+      for (let i = 1; i <= pageCount; i++) {
+        doc.setPage(i);
+
+        // ----- ENCABEZADO -----
+        doc.setFont("helvetica", "bold");
+        doc.setFontSize(18);
+        doc.text("Planeación de la migración hacia SAP S/4 HANA", pageWidth / 2, marginLeft + 25, { align: "center" });
+
+        doc.setFont("helvetica", "normal");
+        doc.setFontSize(14);
+        doc.text("Check-list de tareas de la Metodología SAP Activate", pageWidth / 2, marginLeft + 45, { align: "center" });
+
+        // ----- PIE DE PÁGINA -----
+        const footerY = pageHeight - footerHeight + 50;
+        doc.setFontSize(10);
+        /*
+        doc.text(`Proyecto: ${proyecto}`, marginLeft, footerY);
+        doc.text(`Elaboró: ${elaboro}`, marginLeft + 200, footerY);
+        doc.text(`Fecha: ${fecha}`, marginLeft + 380, footerY);
+        */
+        doc.text(`Página ${i} de ${pageCount}`, pageWidth - marginRight - 100, footerY);
+      }
+
+      doc.save("Resumen_Migracion.pdf");
+    },
+    margin: [headerHeight, marginRight, bottomMargin, marginLeft]
+  });
+}
+
+
+// Descargar Word
+  function descargarWord() {
+    const contenido = document.getElementById("contenidoResumen").innerHTML;
+    if (!contenido.trim()) { alert("Genera primero el resumen"); return; }
+
+    const blob = new Blob(["\ufeff", contenido], { type: "application/msword;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "Resumen_Migracion.doc";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  }
+</script>
+
+  </body>
+  </html>
+
